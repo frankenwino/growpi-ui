@@ -1,10 +1,7 @@
 // import Image from "next/image";
 // import styles from "./page.module.css";
-import CurrentDateTime from "./component/CurrentDateTime";
-import { ECBar } from "./component/ECBar";
-import LightStatus from "./component/LightStatus";
-import { PhBar } from "./component/PHBar";
-import { SensorGauge } from "./component/SensorGauge";
+import CurrentDateTime from "./components/CurrentDateTime";
+import Dashboard from "./components/Dashboard";
 
 export default function Home() {
   // return (<Typography>GrowPi!</Typography>);
@@ -12,14 +9,16 @@ export default function Home() {
     <>
       {/* <Typography>Hi</Typography> */}
       <CurrentDateTime />
-      {/* <SensorData /> */}
-      <SensorGauge label="Humidity (AM2301)" value={58} unit="%" />
-      <SensorGauge label="Temperature (AM2302)" value={23.5} unit="°C" />
-      <SensorGauge label="Water Temp (DS18B20)" value={19.8} unit="°C" />
-
-      <LightStatus isOn={false} />
-      <PhBar phValue={4} />
-      <ECBar ecValue={1.3} />
+      {/* <SensorData />
+      <WaterTempGauge temperature={25} />
+      <RoomTempGauge temperature={31} />
+      <HumidityGauge humidity={40.3} />
+      <PhGauge phValue={5.5} />
+      <ECGauge ecValue={4.1} />
+      <CO2Gauge co2Value={4001} />
+      <LightDetector isOn={false} /> */}
+      <Dashboard />
+      {/* <ECGaugeNoBox ecValue={4.1} /> */}
     </>
   );
 }
