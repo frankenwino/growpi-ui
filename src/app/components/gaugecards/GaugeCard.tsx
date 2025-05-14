@@ -1,4 +1,3 @@
-// components/gauges/GaugeCard.tsx
 import { Box, Typography } from "@mui/material";
 import { Gauge } from "@mui/x-charts/Gauge";
 

@@ -16,8 +16,17 @@ export default function Dashboard() {
     roomTemp: 22.5,
     waterTemp: 18.2,
     ec: 1,
-    lightDetected: false,
+    lightDetected: true,
   };
+
+  // const apiUrl = process.env.GROWPIHUB_API_BASE_URL;
+  // const latest = `${apiUrl}/LM393/latest`;
+
+  // const { data, error, loading } = useFetch<LM393Reading>(latest);
+  // console.log(data);
+
+  // if (loading) return <div>Loading...</div>;
+  // if (error) return <div>Error: {String(error)}</div>;
 
   return (
     <Box sx={{ padding: 3 }}>
