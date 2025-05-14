@@ -1,9 +1,26 @@
 // import Image from "next/image";
 // import styles from "./page.module.css";
-import { Typography } from "@mui/material";
+import CurrentDateTime from "./components/CurrentDateTime";
+import Dashboard from "./components/Dashboard";
 
 export default function Home() {
-  return <Typography>GrowPi!</Typography>;
+  // return (<Typography>GrowPi!</Typography>);
+  return (
+    <>
+      {/* <Typography>Hi</Typography> */}
+      <CurrentDateTime />
+      {/* <SensorData />
+      <WaterTempGauge temperature={25} />
+      <RoomTempGauge temperature={31} />
+      <HumidityGauge humidity={40.3} />
+      <PhGauge phValue={5.5} />
+      <ECGauge ecValue={4.1} />
+      <CO2Gauge co2Value={4001} />
+      <LightDetector isOn={false} /> */}
+      <Dashboard />
+      {/* <ECGaugeNoBox ecValue={4.1} /> */}
+    </>
+  );
 }
 
 // export default function Home() {
