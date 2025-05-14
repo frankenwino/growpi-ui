@@ -18,3 +18,29 @@ export interface DS18B20Reading extends BaseSensorReading {
 export interface LM393Reading extends BaseSensorReading {
   light_detected: boolean;
 }
+
+export type AM2301Response = {
+  sensor: string;
+  temperature: number;
+  humidity: number;
+  reading_timestamp_utc: string;
+};
+
+export type AM2302Response = {
+  sensor: string;
+  temperature: number;
+  humidity: number;
+  reading_timestamp_utc: string;
+};
+
+export type DS18B20Response = {
+  sensor: string;
+  temperature: number;
+  reading_timestamp_utc: string;
+};
+
+export type LM393Response = {
+  sensor: string;
+  light_detected: boolean;
+  reading_timestamp_utc: string;
+};
