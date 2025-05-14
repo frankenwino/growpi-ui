@@ -27,13 +27,13 @@ export default function Dashboard() {
     const load = async () => {
       // To fix CORS issues, ensure your ASP.NET Core backend sets the appropriate headers.
       // This code assumes fetchWaterTemperature works as expected.
-      const waterTempResponse = await fetchWaterTemperature("latest"); // or "sourceB"
+      const waterTempResponse = await fetchWaterTemperature("current"); // or "sourceB"
       setWaterTemp(waterTempResponse);
 
-      const lightDetectedResponse = await fetchLightDetected("latest"); // or "sourceB"
+      const lightDetectedResponse = await fetchLightDetected("current"); // or "sourceB"
       setLightDetected(Boolean(lightDetectedResponse));
 
-      const tempHumidityResponse = await fetchTemperatureHumidity("latest"); // or "sourceB"
+      const tempHumidityResponse = await fetchTemperatureHumidity("current"); // or "sourceB"
       setHumidity(tempHumidityResponse?.humidity);
       setRoomTemp(tempHumidityResponse?.temperature);
     };
