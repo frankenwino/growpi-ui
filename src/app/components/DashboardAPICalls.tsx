@@ -1,6 +1,7 @@
 "use client";
 
-import { Box, Typography } from "@mui/material";
+import { LM393Response } from "@/data";
+import { Box, Link, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import {
   fetchLightDetected,
@@ -16,26 +17,28 @@ import RoomTempGauge from "./gaugecards/RoomTempGauge";
 import WaterTempGauge from "./gaugecards/WaterTempGauge";
 
 export default function Dashboard() {
-  // Example sensor data (replace these with actual data from your API or state)
-
   const [waterTemp, setWaterTemp] = useState<number | undefined>();
-  const [lightDetected, setLightDetected] = useState<boolean | undefined>();
+  const [lightDetected, setLightDetected] = useState<
+    LM393Response | undefined
+  >();
   const [humidity, setHumidity] = useState<number | undefined>();
   const [roomTemp, setRoomTemp] = useState<number | undefined>();
+  // const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const load = async () => {
+      // setIsLoading(true);
       // To fix CORS issues, ensure your ASP.NET Core backend sets the appropriate headers.
-      // This code assumes fetchWaterTemperature works as expected.
       const waterTempResponse = await fetchWaterTemperature("current"); // or "sourceB"
       setWaterTemp(waterTempResponse);
 
       const lightDetectedResponse = await fetchLightDetected("current"); // or "sourceB"
-      setLightDetected(Boolean(lightDetectedResponse));
+      setLightDetected(lightDetectedResponse);
 
       const tempHumidityResponse = await fetchTemperatureHumidity("current"); // or "sourceB"
       setHumidity(tempHumidityResponse?.humidity);
       setRoomTemp(tempHumidityResponse?.temperature);
+      // setIsLoading(false);
     };
     load();
   }, []);
@@ -47,7 +50,7 @@ export default function Dashboard() {
     roomTemp: roomTemp,
     waterTemp: waterTemp,
     ec: 1,
-    lightDetected: lightDetected,
+    lightDetected: lightDetected?.light_detected,
   };
 
   // type SensorData = {
@@ -111,6 +114,9 @@ export default function Dashboard() {
 
   // if (loading) return <div>Loading...</div>;
   // if (error) return <div>Error: {String(error)}</div>;
+  // if (isLoading) {
+  //   return <div>Loading sensor data...</div>;
+  // }
 
   return (
     <Box sx={{ padding: 3 }}>
@@ -127,27 +133,56 @@ export default function Dashboard() {
           gap: 3, // Adds spacing between items
         }}
       >
-        <Box sx={{ flex: "1 1 100%", md: "1 1 30%" }}>
+        {/* <Box sx={{ flex: "1 1 100%", md: "1 1 30%" }}>
           <RoomTempGauge temperature={sensorData.roomTemp} />
+        </Box> */}
+        <Box sx={{ flex: "1 1 100%", md: "1 1 30%" }}>
+          {/* Add your LightDetector component here */}
+
+          <Link
+            href="/history/light"
+            style={{ textDecoration: "none", cursor: "pointer" }}
+          >
+            <LightDetector lightDetected={sensorData.lightDetected ?? false} />
+          </Link>
+        </Box>
+
+        <Box sx={{ flex: "1 1 100%", md: "1 1 30%" }}>
+          <Link
+            href="/history/room-temperature"
+            style={{ textDecoration: "none", cursor: "pointer" }}
+          >
+            <RoomTempGauge temperature={sensorData.roomTemp} />
+          </Link>
         </Box>
         <Box sx={{ flex: "1 1 100%", md: "1 1 30%" }}>
-          <HumidityGauge humidity={sensorData.humidity} />
+          <Link
+            href="/history/humidity"
+            style={{ textDecoration: "none", cursor: "pointer" }}
+          >
+            <HumidityGauge humidity={sensorData.humidity} />
+          </Link>
         </Box>
+
         <Box sx={{ flex: "1 1 100%", md: "1 1 30%" }}>
           <CO2Gauge co2Value={sensorData.co2} />
         </Box>
+
         <Box sx={{ flex: "1 1 100%", md: "1 1 30%" }}>
-          <WaterTempGauge temperature={sensorData.waterTemp} />
+          <Link
+            href="/history/water-temperature"
+            style={{ textDecoration: "none", cursor: "pointer" }}
+          >
+            <WaterTempGauge temperature={sensorData.waterTemp} />
+          </Link>
         </Box>
+
         <Box sx={{ flex: "1 1 100%", md: "1 1 30%" }}>
           <PhGauge phValue={sensorData.ph} />
         </Box>
+
         <Box sx={{ flex: "1 1 0", minWidth: 0 }}>
           <ECGauge ecValue={sensorData.ec} />
-        </Box>
-        <Box sx={{ flex: "1 1 100%", md: "1 1 30%" }}>
-          {/* Add your LightDetector component here */}
-          <LightDetector lightDetected={sensorData.lightDetected ?? false} />
         </Box>
       </Box>
     </Box>
