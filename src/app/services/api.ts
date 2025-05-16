@@ -8,6 +8,7 @@ async function fetchWithApiKey<T>(url: string): Promise<T> {
   }
 
   const response = await fetch(url, {
+    // credentials: "include",
     headers: {
       "X-API-Key": apiKey,
       "Content-Type": "application/json",
