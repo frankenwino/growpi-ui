@@ -1,10 +1,12 @@
 "use client";
 
-import { LM393Response } from "@/data";
 import { Box, Link, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import {
+  fetchCO2,
+  fetchEC,
   fetchLightDetected,
+  fetchPH,
   fetchTemperatureHumidity,
   fetchWaterTemperature,
 } from "../services/api";
@@ -18,105 +20,52 @@ import WaterTempGauge from "./gaugecards/WaterTempGauge";
 
 export default function Dashboard() {
   const [waterTemp, setWaterTemp] = useState<number | undefined>();
-  const [lightDetected, setLightDetected] = useState<
-    LM393Response | undefined
-  >();
+  const [lightDetected, setLightDetected] = useState<boolean | undefined>();
   const [humidity, setHumidity] = useState<number | undefined>();
   const [roomTemp, setRoomTemp] = useState<number | undefined>();
+  const [co2, setCo2] = useState<number | undefined>();
+  const [ph, setPh] = useState<number | undefined>();
+  const [ec, setEc] = useState<number | undefined>();
+
   // const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const load = async () => {
       // setIsLoading(true);
       // To fix CORS issues, ensure your ASP.NET Core backend sets the appropriate headers.
-      const waterTempResponse = await fetchWaterTemperature("current"); // or "sourceB"
-      setWaterTemp(waterTempResponse);
+      const waterTempResponse = await fetchWaterTemperature("current"); // or "latest"
+      setWaterTemp(waterTempResponse?.temperature);
 
-      const lightDetectedResponse = await fetchLightDetected("current"); // or "sourceB"
-      setLightDetected(lightDetectedResponse);
+      const lightDetectedResponse = await fetchLightDetected("current");
+      setLightDetected(lightDetectedResponse?.light_detected);
 
-      const tempHumidityResponse = await fetchTemperatureHumidity("current"); // or "sourceB"
+      const tempHumidityResponse = await fetchTemperatureHumidity("current");
       setHumidity(tempHumidityResponse?.humidity);
       setRoomTemp(tempHumidityResponse?.temperature);
+
+      const co2Response = await fetchCO2("current");
+      setCo2(co2Response?.ppm);
+
+      const phResponse = await fetchPH("current");
+      setPh(phResponse?.ph);
+
+      const ecResponse = await fetchEC("current");
+      setEc(ecResponse?.mScm);
+
       // setIsLoading(false);
     };
     load();
   }, []);
 
   const sensorData = {
-    co2: 1200,
+    co2: co2,
     humidity: humidity,
-    ph: 6.5,
+    ph: ph,
     roomTemp: roomTemp,
     waterTemp: waterTemp,
-    ec: 1,
-    lightDetected: lightDetected?.light_detected,
+    ec: ec,
+    lightDetected: lightDetected,
   };
-
-  // type SensorData = {
-  //   co2: number;
-  //   humidity: number;
-  //   ph: number;
-  //   roomTemp: number;
-  //   waterTemp: number;
-  //   ec: number;
-  //   lightDetected: boolean;
-  // };
-
-  // const [sensorData, setSensorData] = useState<SensorData>({
-  //   co2: 0,
-  //   humidity: 0,
-  //   ph: 0,
-  //   roomTemp: 0,
-  //   waterTemp: 0,
-  //   ec: 0,
-  //   lightDetected: false,
-  // });
-
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState<string | null>(null);
-
-  // useEffect(() => {
-  //   const fetchSensorData = async () => {
-  //     try {
-  //       setLoading(true);
-  //       setError(null);
-  //       // Replace with your actual API endpoint
-  //       const response = await fetch("/api/sensors/latest");
-  //       if (!response.ok) throw new Error("Failed to fetch sensor data");
-  //       const data = await response.json();
-  //       setSensorData({
-  //         co2: data.co2,
-  //         humidity: data.humidity,
-  //         ph: data.ph,
-  //         roomTemp: data.roomTemp,
-  //         waterTemp: data.waterTemp,
-  //         ec: data.ec,
-  //         lightDetected: data.lightDetected,
-  //       });
-  //     } catch (err: unknown) {
-  //       setError(err instanceof Error ? err.message : "Unknown error");
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchSensorData();
-  // }, []);
-
-  // if (loading) return <div>Loading...</div>;
-  // if (error) return <div>Error: {error}</div>;
-
-  // const apiUrl = process.env.GROWPIHUB_API_BASE_URL;
-  // const latest = `${apiUrl}/LM393/latest`;
-
-  // const { data, error, loading } = useFetch<LM393Reading>(latest);
-  // console.log(data);
-
-  // if (loading) return <div>Loading...</div>;
-  // if (error) return <div>Error: {String(error)}</div>;
-  // if (isLoading) {
-  //   return <div>Loading sensor data...</div>;
-  // }
 
   return (
     <Box sx={{ padding: 3 }}>
@@ -133,12 +82,7 @@ export default function Dashboard() {
           gap: 3, // Adds spacing between items
         }}
       >
-        {/* <Box sx={{ flex: "1 1 100%", md: "1 1 30%" }}>
-          <RoomTempGauge temperature={sensorData.roomTemp} />
-        </Box> */}
         <Box sx={{ flex: "1 1 100%", md: "1 1 30%" }}>
-          {/* Add your LightDetector component here */}
-
           <Link
             href="/history/light"
             style={{ textDecoration: "none", cursor: "pointer" }}
@@ -155,6 +99,7 @@ export default function Dashboard() {
             <RoomTempGauge temperature={sensorData.roomTemp} />
           </Link>
         </Box>
+
         <Box sx={{ flex: "1 1 100%", md: "1 1 30%" }}>
           <Link
             href="/history/humidity"
@@ -165,7 +110,12 @@ export default function Dashboard() {
         </Box>
 
         <Box sx={{ flex: "1 1 100%", md: "1 1 30%" }}>
-          <CO2Gauge co2Value={sensorData.co2} />
+          <Link
+            href="/history/co2"
+            style={{ textDecoration: "none", cursor: "pointer" }}
+          >
+            <CO2Gauge co2Value={sensorData.co2} />
+          </Link>
         </Box>
 
         <Box sx={{ flex: "1 1 100%", md: "1 1 30%" }}>
@@ -178,11 +128,21 @@ export default function Dashboard() {
         </Box>
 
         <Box sx={{ flex: "1 1 100%", md: "1 1 30%" }}>
-          <PhGauge phValue={sensorData.ph} />
+          <Link
+            href="/history/ph"
+            style={{ textDecoration: "none", cursor: "pointer" }}
+          >
+            <PhGauge phValue={sensorData.ph} />
+          </Link>
         </Box>
 
-        <Box sx={{ flex: "1 1 0", minWidth: 0 }}>
-          <ECGauge ecValue={sensorData.ec} />
+        <Box sx={{ flex: "1 1 100%", md: "1 1 30%" }}>
+          <Link
+            href="/history/ec"
+            style={{ textDecoration: "none", cursor: "pointer" }}
+          >
+            <ECGauge ecValue={sensorData.ec} />
+          </Link>
         </Box>
       </Box>
     </Box>

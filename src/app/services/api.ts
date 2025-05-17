@@ -1,4 +1,11 @@
-import { AM2301Response, DS18B20Response, LM393Response } from "@/data";
+import {
+  AM2301Response,
+  CO2SensorResponse,
+  DS18B20Response,
+  ECSensorResponse,
+  LM393Response,
+  PHSensorResponse,
+} from "@/data";
 
 // Helper function for authenticated API calls
 async function fetchWithApiKey<T>(url: string): Promise<T> {
@@ -24,11 +31,11 @@ async function fetchWithApiKey<T>(url: string): Promise<T> {
 
 export async function fetchWaterTemperature(
   source: "latest" | "current"
-): Promise<number | undefined> {
+): Promise<DS18B20Response | undefined> {
   try {
     const url = `${process.env.NEXT_PUBLIC_GROWPIHUB_API_BASE_URL}/DS18B20/${source}`;
-    const json = await fetchWithApiKey<{ temperature: number }>(url);
-    return json.temperature;
+    // const json = await fetchWithApiKey<DS18B20Response>(url);
+    return await fetchWithApiKey<DS18B20Response>(url);
   } catch (error) {
     console.error("Failed to fetch water temperature:", error);
     return undefined;
@@ -91,6 +98,79 @@ export async function fetchTemperatureHumidityHistory(
     return await fetchWithApiKey<AM2301Response[]>(url);
   } catch (error) {
     console.error("Failed to fetch temperature and humidity history", error);
+    return undefined;
+  }
+}
+
+export async function fetchCO2(
+  source: "latest" | "current"
+): Promise<CO2SensorResponse | undefined> {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_GROWPIHUB_API_BASE_URL}/CO2Sensor/${source}`;
+    return await fetchWithApiKey<CO2SensorResponse>(url);
+  } catch (error) {
+    console.error("Failed to fetch CO2 reading", error);
+    return undefined;
+  }
+}
+
+export async function fetchCO2History(
+  days: number = 30
+): Promise<CO2SensorResponse[] | undefined> {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_GROWPIHUB_API_BASE_URL}/CO2Sensor/days/${days}`;
+    return await fetchWithApiKey<CO2SensorResponse[]>(url);
+  } catch (error) {
+    console.error("Failed to fetch CO2 history", error);
+    return undefined;
+  }
+}
+
+export async function fetchPH(
+  source: "latest" | "current"
+): Promise<PHSensorResponse | undefined> {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_GROWPIHUB_API_BASE_URL}/PHSensor/${source}`;
+    return await fetchWithApiKey<PHSensorResponse>(url);
+  } catch (error) {
+    console.error("Failed to fetch pH reading", error);
+    return undefined;
+  }
+}
+
+export async function fetchPHHistory(
+  days: number = 30
+): Promise<PHSensorResponse[] | undefined> {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_GROWPIHUB_API_BASE_URL}/PHSensor/days/${days}`;
+    return await fetchWithApiKey<PHSensorResponse[]>(url);
+  } catch (error) {
+    console.error("Failed to fetch pH history", error);
+    return undefined;
+  }
+}
+
+export async function fetchEC(
+  source: "latest" | "current"
+): Promise<ECSensorResponse | undefined> {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_GROWPIHUB_API_BASE_URL}/ECSensor/${source}`;
+    console.log(url);
+    return await fetchWithApiKey<ECSensorResponse>(url);
+  } catch (error) {
+    console.error("Failed to fetch EC reading", error);
+    return undefined;
+  }
+}
+
+export async function fetchECHistory(
+  days: number = 30
+): Promise<ECSensorResponse[] | undefined> {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_GROWPIHUB_API_BASE_URL}/ECSensor/days/${days}`;
+    return await fetchWithApiKey<ECSensorResponse[]>(url);
+  } catch (error) {
+    console.error("Failed to fetch EC history", error);
     return undefined;
   }
 }

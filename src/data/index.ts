@@ -44,3 +44,21 @@ export type LM393Response = {
   light_detected: boolean;
   reading_timestamp_utc: string;
 };
+
+export type CO2SensorResponse = {
+  sensor: string;
+  ppm: number;
+  reading_timestamp_utc: string;
+};
+
+export type PHSensorResponse = {
+  sensor: string;
+  ph: number;
+  reading_timestamp_utc: string;
+};
+
+export type ECSensorResponse = {
+  sensor: string;
+  mScm: number;
+  reading_timestamp_utc: string;
+};
