@@ -2,21 +2,9 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-import { CssBaseline } from "@mui/material";
-
 import type { Metadata } from "next";
-// import { Geist, Geist_Mono } from "next/font/google";
-// import "./globals.css";
-
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
+import ThemeWrapper from "./components/ThemeWrapper";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "GrowPi",
@@ -30,16 +18,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <CssBaseline />
       <body>
-        <header></header>
-        {children}
-
-        <footer>
-          {/* <BottomNavigation>
-            <Typography>GrowPi Footer</Typography>
-          </BottomNavigation> */}
-        </footer>
+        <ThemeWrapper>
+          <header></header>
+          {children}
+          <footer></footer>
+        </ThemeWrapper>
       </body>
     </html>
   );

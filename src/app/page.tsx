@@ -1,6 +1,5 @@
 // import Image from "next/image";
 // import styles from "./page.module.css";
-import CurrentDateTime from "./components/CurrentDateTime";
 import DashboardAPICalls from "./components/DashboardAPICalls";
 
 export default function Home() {
@@ -8,7 +7,7 @@ export default function Home() {
   return (
     <>
       {/* <Typography>Hi</Typography> */}
-      <CurrentDateTime />
+      {/* <CurrentDateTime /> */}
       {/* <TestAPICAll /> */}
 
       {/* <Dashboard /> */}

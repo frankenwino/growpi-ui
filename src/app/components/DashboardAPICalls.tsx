@@ -69,81 +69,87 @@ export default function Dashboard() {
 
   return (
     <Box sx={{ padding: 3 }}>
-      <Typography variant="h4" gutterBottom>
-        Sensor Dashboard
-      </Typography>
-
-      {/* Flexbox container to display gauges */}
       <Box
         sx={{
           display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "space-between", // Distribute space evenly
-          gap: 3, // Adds spacing between items
+          flexDirection: "column",
+          alignItems: "center",
+          mb: 4,
         }}
       >
-        <Box sx={{ flex: "1 1 100%", md: "1 1 30%" }}>
-          <Link
-            href="/history/light"
-            style={{ textDecoration: "none", cursor: "pointer" }}
-          >
-            <LightDetector lightDetected={sensorData.lightDetected ?? false} />
-          </Link>
-        </Box>
+        <Typography variant="h4" gutterBottom>
+          Sensor Dashboard
+        </Typography>
+        <Link
+          href="/history/light"
+          style={{ textDecoration: "none", cursor: "pointer" }}
+        >
+          <LightDetector lightDetected={sensorData.lightDetected ?? false} />
+        </Link>
+      </Box>
 
-        <Box sx={{ flex: "1 1 100%", md: "1 1 30%" }}>
-          <Link
-            href="/history/room-temperature"
-            style={{ textDecoration: "none", cursor: "pointer" }}
-          >
-            <RoomTempGauge temperature={sensorData.roomTemp} />
-          </Link>
-        </Box>
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: {
+            xs: "1fr", // 1 column on mobile
+            sm: "repeat(2, 1fr)", // 2 columns on tablet
+            md: "repeat(3, 1fr)", // 3 columns on desktop
+            lg: "repeat(4, 1fr)", // 4 columns on large screens
+          },
+          gap: 3,
+          width: "100%",
+          "& > a": {
+            // Style all Link components
+            flex: 1,
+            minWidth: 250, // Minimum width for each gauge
+            maxWidth: "100%",
+            display: "flex",
+            justifyContent: "center",
+          },
+        }}
+      >
+        <Link
+          href="/history/room-temperature"
+          style={{ textDecoration: "none", cursor: "pointer" }}
+        >
+          <RoomTempGauge temperature={sensorData.roomTemp} />
+        </Link>
 
-        <Box sx={{ flex: "1 1 100%", md: "1 1 30%" }}>
-          <Link
-            href="/history/humidity"
-            style={{ textDecoration: "none", cursor: "pointer" }}
-          >
-            <HumidityGauge humidity={sensorData.humidity} />
-          </Link>
-        </Box>
+        <Link
+          href="/history/humidity"
+          style={{ textDecoration: "none", cursor: "pointer" }}
+        >
+          <HumidityGauge humidity={sensorData.humidity} />
+        </Link>
 
-        <Box sx={{ flex: "1 1 100%", md: "1 1 30%" }}>
-          <Link
-            href="/history/co2"
-            style={{ textDecoration: "none", cursor: "pointer" }}
-          >
-            <CO2Gauge co2Value={sensorData.co2} />
-          </Link>
-        </Box>
+        <Link
+          href="/history/co2"
+          style={{ textDecoration: "none", cursor: "pointer" }}
+        >
+          <CO2Gauge co2Value={sensorData.co2} />
+        </Link>
 
-        <Box sx={{ flex: "1 1 100%", md: "1 1 30%" }}>
-          <Link
-            href="/history/water-temperature"
-            style={{ textDecoration: "none", cursor: "pointer" }}
-          >
-            <WaterTempGauge temperature={sensorData.waterTemp} />
-          </Link>
-        </Box>
+        <Link
+          href="/history/water-temperature"
+          style={{ textDecoration: "none", cursor: "pointer" }}
+        >
+          <WaterTempGauge temperature={sensorData.waterTemp} />
+        </Link>
 
-        <Box sx={{ flex: "1 1 100%", md: "1 1 30%" }}>
-          <Link
-            href="/history/ph"
-            style={{ textDecoration: "none", cursor: "pointer" }}
-          >
-            <PhGauge phValue={sensorData.ph} />
-          </Link>
-        </Box>
+        <Link
+          href="/history/ph"
+          style={{ textDecoration: "none", cursor: "pointer" }}
+        >
+          <PhGauge phValue={sensorData.ph} />
+        </Link>
 
-        <Box sx={{ flex: "1 1 100%", md: "1 1 30%" }}>
-          <Link
-            href="/history/ec"
-            style={{ textDecoration: "none", cursor: "pointer" }}
-          >
-            <ECGauge ecValue={sensorData.ec} />
-          </Link>
-        </Box>
+        <Link
+          href="/history/ec"
+          style={{ textDecoration: "none", cursor: "pointer" }}
+        >
+          <ECGauge ecValue={sensorData.ec} />
+        </Link>
       </Box>
     </Box>
   );
