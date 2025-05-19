@@ -12,17 +12,36 @@ export default function Topbar() {
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
 
-  return (
-    <Box display="flex" justifyContent="space-between" p={2}>
-      {/* DATE TIME */}
+  const iconButtonStyle = {
+    color: colors.grey?.[100],
+    "&:hover": {
+      color: "#868dfb",
+    },
+  };
 
+  return (
+    <Box
+      display="flex"
+      justifyContent="space-between"
+      p={{ xs: 1, sm: 2 }} // Responsive padding
+      alignItems="center" // Better vertical alignment
+    >
+      {/* DateTime Box */}
       <Box
         display="flex"
-        sx={{ backgroundColor: colors.primary?.[400], borderRadius: "3px" }}
+        sx={{
+          backgroundColor:
+            theme.palette.mode === "dark"
+              ? colors.primary?.[400]
+              : colors.primary?.[100],
+          width: "200px", // Set fixed width
+          justifyContent: "center",
+        }}
       >
         <CurrentDateTime />
       </Box>
 
+      {/* Center Title Box */}
       <Box
         display="flex"
         alignItems="center"
@@ -34,21 +53,29 @@ export default function Topbar() {
           variant="h1"
           align="center"
           color={colors.grey?.[100]}
-          fontWeight={"bold"}
+          fontWeight="bold" // Use string instead of object notation
         >
           GrowPi
         </Typography>
       </Box>
 
-      <Box display="flex" alignItems="center">
+      {/* Icons Box */}
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        sx={{
+          width: "200px", // Match width with DateTime box
+          // backgroundColor:
+          //   theme.palette.mode === "dark"
+          //     ? colors.primary?.[400]
+          //     : colors.primary?.[100],
+        }}
+      >
         <IconButton
           onClick={colorMode.toggleColorMode}
-          sx={{
-            color: colors.grey?.[100],
-            "&:hover": {
-              color: "#868dfb",
-            },
-          }}
+          sx={iconButtonStyle}
+          aria-label="toggle dark mode"
         >
           {theme.palette.mode === "dark" ? (
             <DarkModeOutlinedIcon />
@@ -57,25 +84,11 @@ export default function Topbar() {
           )}
         </IconButton>
 
-        <IconButton
-          sx={{
-            color: colors.grey?.[100],
-            "&:hover": {
-              color: "#868dfb",
-            },
-          }}
-        >
+        <IconButton sx={iconButtonStyle} aria-label="notifications">
           <NotificationsOutlinedIcon />
         </IconButton>
 
-        <IconButton
-          sx={{
-            color: colors.grey?.[100],
-            "&:hover": {
-              color: "#868dfb",
-            },
-          }}
-        >
+        <IconButton sx={iconButtonStyle} aria-label="settings">
           <SettingsOutlinedIcon />
         </IconButton>
       </Box>
