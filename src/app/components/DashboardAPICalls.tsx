@@ -1,6 +1,7 @@
 "use client";
 
-import { Box, Link, Typography } from "@mui/material";
+import { tokens } from "@/theme";
+import { Box, Link, Typography, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import {
   fetchCO2,
@@ -19,6 +20,9 @@ import RoomTempGauge from "./gaugecards/RoomTempGauge";
 import WaterTempGauge from "./gaugecards/WaterTempGauge";
 
 export default function Dashboard() {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   const [waterTemp, setWaterTemp] = useState<number | undefined>();
   const [lightDetected, setLightDetected] = useState<boolean | undefined>();
   const [humidity, setHumidity] = useState<number | undefined>();
@@ -77,7 +81,13 @@ export default function Dashboard() {
           mb: 4,
         }}
       >
-        <Typography variant="h4" gutterBottom>
+        <Typography
+          variant="h4"
+          gutterBottom
+          sx={{
+            color: colors.grey?.[100],
+          }}
+        >
           Sensor Dashboard
         </Typography>
         <Link
