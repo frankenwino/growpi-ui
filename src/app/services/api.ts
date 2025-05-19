@@ -35,13 +35,22 @@ async function fetchWithApiKey<T>(url: string): Promise<T> {
 export async function fetchWaterTemperature(
   source: "latest" | "current"
 ): Promise<DS18B20Response | undefined> {
+  const otherSource = source === "latest" ? "current" : "latest";
   try {
     const url = `${process.env.NEXT_PUBLIC_GROWPIHUB_API_BASE_URL}/DS18B20/${source}`;
-    // const json = await fetchWithApiKey<DS18B20Response>(url);
     return await fetchWithApiKey<DS18B20Response>(url);
   } catch (error) {
-    console.error("Failed to fetch water temperature:", error);
-    return undefined;
+    console.error(`Failed to fetch water temperature from ${source}:`, error);
+    try {
+      const fallbackUrl = `${process.env.NEXT_PUBLIC_GROWPIHUB_API_BASE_URL}/DS18B20/${otherSource}`;
+      return await fetchWithApiKey<DS18B20Response>(fallbackUrl);
+    } catch (fallbackError) {
+      console.error(
+        `Failed to fetch water temperature from ${otherSource}:`,
+        fallbackError
+      );
+      return undefined;
+    }
   }
 }
 
@@ -60,12 +69,22 @@ export async function fetchWaterTemperatureHistory(
 export async function fetchLightDetected(
   source: "latest" | "current"
 ): Promise<LM393Response | undefined> {
+  const otherSource = source === "latest" ? "current" : "latest";
   try {
     const url = `${process.env.NEXT_PUBLIC_GROWPIHUB_API_BASE_URL}/LM393/${source}`;
     return await fetchWithApiKey<LM393Response>(url);
   } catch (error) {
-    console.error("Failed to fetch light reading", error);
-    return undefined;
+    console.error(`Failed to fetch light reading from ${source}:`, error);
+    try {
+      const fallbackUrl = `${process.env.NEXT_PUBLIC_GROWPIHUB_API_BASE_URL}/LM393/${otherSource}`;
+      return await fetchWithApiKey<LM393Response>(fallbackUrl);
+    } catch (fallbackError) {
+      console.error(
+        `Failed to fetch light reading from ${otherSource}:`,
+        fallbackError
+      );
+      return undefined;
+    }
   }
 }
 
@@ -84,12 +103,25 @@ export async function fetchLightHistory(
 export async function fetchTemperatureHumidity(
   source: "latest" | "current"
 ): Promise<AM2301Response | undefined> {
+  const otherSource = source === "latest" ? "current" : "latest";
   try {
     const url = `${process.env.NEXT_PUBLIC_GROWPIHUB_API_BASE_URL}/AM2301/${source}`;
     return await fetchWithApiKey<AM2301Response>(url);
   } catch (error) {
-    console.error("Failed to fetch temperature/humidity reading", error);
-    return undefined;
+    console.error(
+      `Failed to fetch temperature/humidity from ${source}:`,
+      error
+    );
+    try {
+      const fallbackUrl = `${process.env.NEXT_PUBLIC_GROWPIHUB_API_BASE_URL}/AM2301/${otherSource}`;
+      return await fetchWithApiKey<AM2301Response>(fallbackUrl);
+    } catch (fallbackError) {
+      console.error(
+        `Failed to fetch temperature/humidity from ${otherSource}:`,
+        fallbackError
+      );
+      return undefined;
+    }
   }
 }
 
@@ -108,12 +140,22 @@ export async function fetchTemperatureHumidityHistory(
 export async function fetchCO2(
   source: "latest" | "current"
 ): Promise<CO2SensorResponse | undefined> {
+  const otherSource = source === "latest" ? "current" : "latest";
   try {
     const url = `${process.env.NEXT_PUBLIC_GROWPIHUB_API_BASE_URL}/CO2Sensor/${source}`;
     return await fetchWithApiKey<CO2SensorResponse>(url);
   } catch (error) {
-    console.error("Failed to fetch CO2 reading", error);
-    return undefined;
+    console.error(`Failed to fetch CO2 reading from ${source}:`, error);
+    try {
+      const fallbackUrl = `${process.env.NEXT_PUBLIC_GROWPIHUB_API_BASE_URL}/CO2Sensor/${otherSource}`;
+      return await fetchWithApiKey<CO2SensorResponse>(fallbackUrl);
+    } catch (fallbackError) {
+      console.error(
+        `Failed to fetch CO2 reading from ${otherSource}:`,
+        fallbackError
+      );
+      return undefined;
+    }
   }
 }
 
@@ -132,12 +174,22 @@ export async function fetchCO2History(
 export async function fetchPH(
   source: "latest" | "current"
 ): Promise<PHSensorResponse | undefined> {
+  const otherSource = source === "latest" ? "current" : "latest";
   try {
     const url = `${process.env.NEXT_PUBLIC_GROWPIHUB_API_BASE_URL}/PHSensor/${source}`;
     return await fetchWithApiKey<PHSensorResponse>(url);
   } catch (error) {
-    console.error("Failed to fetch pH reading", error);
-    return undefined;
+    console.error(`Failed to fetch pH reading from ${source}:`, error);
+    try {
+      const fallbackUrl = `${process.env.NEXT_PUBLIC_GROWPIHUB_API_BASE_URL}/PHSensor/${otherSource}`;
+      return await fetchWithApiKey<PHSensorResponse>(fallbackUrl);
+    } catch (fallbackError) {
+      console.error(
+        `Failed to fetch pH reading from ${otherSource}:`,
+        fallbackError
+      );
+      return undefined;
+    }
   }
 }
 
@@ -156,13 +208,22 @@ export async function fetchPHHistory(
 export async function fetchEC(
   source: "latest" | "current"
 ): Promise<ECSensorResponse | undefined> {
+  const otherSource = source === "latest" ? "current" : "latest";
   try {
     const url = `${process.env.NEXT_PUBLIC_GROWPIHUB_API_BASE_URL}/ECSensor/${source}`;
-    console.log(url);
     return await fetchWithApiKey<ECSensorResponse>(url);
   } catch (error) {
-    console.error("Failed to fetch EC reading", error);
-    return undefined;
+    console.error(`Failed to fetch EC reading from ${source}:`, error);
+    try {
+      const fallbackUrl = `${process.env.NEXT_PUBLIC_GROWPIHUB_API_BASE_URL}/ECSensor/${otherSource}`;
+      return await fetchWithApiKey<ECSensorResponse>(fallbackUrl);
+    } catch (fallbackError) {
+      console.error(
+        `Failed to fetch EC reading from ${otherSource}:`,
+        fallbackError
+      );
+      return undefined;
+    }
   }
 }
 
