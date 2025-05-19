@@ -26,7 +26,7 @@ async function fetchWithApiKey<T>(url: string): Promise<T> {
   });
 
   if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
+    throw new Error(`HTTP error! status: ${response.status} | ${url}`);
   }
 
   return response.json();
