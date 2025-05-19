@@ -2,28 +2,19 @@
 
 import { fetchLightHistory } from "@/app/services/api";
 import { LM393Response } from "@/data";
-import { Box, Typography } from "@mui/material";
+import { tokens } from "@/theme";
+import { Box, Typography, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 
 export default function LightHistory() {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const [readings, setReadings] = useState<LM393Response[] | undefined>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  //   useEffect(() => {
-  //     const loadHistory = async () => {
-  //       try {
-  //         setLoading(true);
-  //         const data = await fetchLightDetected("history");
-  //         setReadings(Array.isArray(data) ? data : [data]);
-  //       } catch (err) {
-  //         setError(err instanceof Error ? err.message : 'Failed to load history');
-  //       } finally {
-  //         setLoading(false);
-  //       }
-  //     };
-  //     loadHistory();
-  //   }, []);
+  const onColor = theme.palette.mode === "dark" ? "#2e7d32" : "#2e7d32";
+  const offColor = theme.palette.mode === "dark" ? "#616161" : "#9e9e9e";
 
   useEffect(() => {
     const load = async () => {
@@ -58,28 +49,33 @@ export default function LightHistory() {
         new Date(a.reading_timestamp_utc).getTime() -
         new Date(b.reading_timestamp_utc).getTime()
     );
-    startDate = new Date(sorted[0].reading_timestamp_utc).toLocaleString();
-    endDate = new Date(
-      sorted[sorted.length - 1].reading_timestamp_utc
-    ).toLocaleString();
+    const formatDate = (dateStr: string) => {
+      const d = new Date(dateStr);
+      return d.toISOString().slice(0, 10); // YYYY-MM-DD
+    };
+    startDate = formatDate(sorted[0].reading_timestamp_utc);
+    endDate = formatDate(sorted[sorted.length - 1].reading_timestamp_utc);
   }
 
   return (
     <Box sx={{ padding: 3 }}>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" gutterBottom sx={{ color: colors.grey?.[100] }}>
         Light Sensor History
       </Typography>
-      {/* Simple visualization: show a bar for each reading, colored by on/off */}
       {readings && readings.length > 0 ? (
         <Box>
-          <Typography variant="h6" gutterBottom>
+          <Typography
+            variant="h6"
+            gutterBottom
+            sx={{ color: colors.grey?.[100] }}
+          >
             Light Readings |
             {startDate && endDate && (
               <>
                 <Typography
                   variant="subtitle1"
                   component="span"
-                  sx={{ ml: 2, fontWeight: 400 }}
+                  sx={{ ml: 2, fontWeight: 400, color: colors.grey?.[100] }}
                 >
                   {startDate} - {endDate}
                 </Typography>
@@ -93,9 +89,7 @@ export default function LightHistory() {
                 sx={{
                   minWidth: 10,
                   height: 40,
-                  backgroundColor: reading.light_detected
-                    ? "#4caf50"
-                    : "#9e9e9e",
+                  backgroundColor: reading.light_detected ? onColor : offColor,
                   borderRadius: 1,
                   transition: "background 0.3s",
                   flex: "0 0 auto",
@@ -106,12 +100,17 @@ export default function LightHistory() {
               />
             ))}
           </Box>
-          <Typography variant="caption" sx={{ mt: 1, display: "block" }}>
+          <Typography
+            variant="caption"
+            sx={{ mt: 1, display: "block", color: colors.grey?.[100] }}
+          >
             Green = ON, Gray = OFF
           </Typography>
         </Box>
       ) : (
-        <Typography>No light sensor history available.</Typography>
+        <Typography sx={{ color: colors.grey?.[100] }}>
+          No light sensor history available.
+        </Typography>
       )}
     </Box>
   );

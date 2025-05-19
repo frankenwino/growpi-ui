@@ -3,6 +3,7 @@ import CloudOutlinedIcon from "@mui/icons-material/CloudOutlined";
 import Co2Outlined from "@mui/icons-material/Co2Outlined";
 import DeviceThermostatOutlinedIcon from "@mui/icons-material/DeviceThermostatOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import LightbulbOutlineIcon from "@mui/icons-material/LightbulbOutline";
 import ScienceOutlinedIcon from "@mui/icons-material/ScienceOutlined";
 import { Box, IconButton } from "@mui/material";
 import { styled } from "@mui/material/styles";
@@ -80,6 +81,11 @@ export default function Sidebar() {
           onClick={() => (window.location.pathname = "/history/ec")}
         >
           <ElectricBoltOutlined />
+        </StyledIconButton>
+        <StyledIconButton
+          onClick={() => (window.location.pathname = "/history/light")}
+        >
+          <LightbulbOutlineIcon />
         </StyledIconButton>
       </Box>
     </Box>

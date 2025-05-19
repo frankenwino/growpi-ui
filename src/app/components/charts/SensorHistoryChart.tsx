@@ -36,16 +36,42 @@ export default function SensorHistoryChart<T extends SensorReading>({
   return (
     <Box sx={{ padding: 3 }}>
       <Typography variant="h4" gutterBottom sx={{ color: colors.grey?.[100] }}>
-        {title}
+        {title} History
       </Typography>
 
       <Box sx={{ width: "100%", height: 400 }}>
+        <Typography
+          variant="subtitle2"
+          sx={{ color: colors.grey?.[100], mb: 1 }}
+        >
+          {readings.length > 0
+            ? `${new Date(readings[0].reading_timestamp_utc).toLocaleDateString(
+                undefined,
+                {
+                  day: "2-digit",
+                  month: "2-digit",
+                }
+              )} - ${new Date(
+                readings[readings.length - 1].reading_timestamp_utc
+              ).toLocaleDateString(undefined, {
+                day: "2-digit",
+                month: "2-digit",
+              })}`
+            : ""}
+        </Typography>
         <LineChart
           xAxis={[
             {
               data: chartData.map((d) => d.timestamp),
               scaleType: "time",
-              valueFormatter: (value) => new Date(value).toLocaleString(),
+              valueFormatter: (value) => {
+                const date = new Date(value);
+                // const mm = String(date.getMonth() + 1).padStart(2, "0");
+                // const dd = String(date.getDate()).padStart(2, "0");
+                const hh = String(date.getHours()).padStart(2, "0");
+                const min = String(date.getMinutes()).padStart(2, "0");
+                return `${hh}:${min}`;
+              },
               tickLabelStyle: {
                 fill: colors.grey?.[100],
               },
@@ -74,7 +100,7 @@ export default function SensorHistoryChart<T extends SensorReading>({
                   ? null
                   : Number(v);
               }),
-              label: title,
+              // label: title,
               color: color,
             },
           ]}

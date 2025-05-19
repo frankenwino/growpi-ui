@@ -2,10 +2,15 @@
 
 import { fetchCO2History } from "@/app/services/api";
 import { CO2SensorResponse } from "@/data";
+import { tokens } from "@/theme";
+import { useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import SensorHistoryChart from "./SensorHistoryChart";
 
 export default function CO2HistoryChart() {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   const [readings, setReadings] = useState<CO2SensorResponse[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -38,7 +43,7 @@ export default function CO2HistoryChart() {
       readings={readings}
       valueKey="ppm"
       unit="ppm"
-      color="#00ACC1"
+      color={colors.greenAccent?.[600] ?? "#00ACC1"} // Fallback to default color if undefined
       yAxisMin={0}
       yAxisMax={6000}
     />
