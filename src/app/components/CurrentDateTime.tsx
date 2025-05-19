@@ -26,6 +26,9 @@ export default function CurrentDateTime() {
 
   const formattedTime = now && now.toLocaleTimeString();
 
+  // if (!now) {
+  //   return <Typography variant="h3">Loading...</Typography>;
+  // }
   return (
     <Card
       sx={{
@@ -41,7 +44,7 @@ export default function CurrentDateTime() {
     >
       <CardContent>
         <Typography
-          variant="h6"
+          // variant="h4"
           sx={{
             color: colors.grey?.[100],
             opacity: 0.9,
@@ -50,7 +53,7 @@ export default function CurrentDateTime() {
           {formattedDate || "\u00A0"}
         </Typography>
         <Typography
-          variant="h4"
+          variant="h3"
           fontWeight="bold"
           sx={{
             color: colors.grey?.[100],
