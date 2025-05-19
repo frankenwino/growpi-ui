@@ -36,14 +36,11 @@ export default function SensorHistoryChart<T extends SensorReading>({
   return (
     <Box sx={{ padding: 3 }}>
       <Typography variant="h4" gutterBottom sx={{ color: colors.grey?.[100] }}>
-        {title} History
+        {title}
       </Typography>
 
       <Box sx={{ width: "100%", height: 400 }}>
-        <Typography
-          variant="subtitle2"
-          sx={{ color: colors.grey?.[100], mb: 1 }}
-        >
+        <Typography variant="h5" sx={{ color: colors.grey?.[100], mb: 1 }}>
           {readings.length > 0
             ? `${new Date(readings[0].reading_timestamp_utc).toLocaleDateString(
                 undefined,
@@ -108,10 +105,13 @@ export default function SensorHistoryChart<T extends SensorReading>({
           sx={{
             backgroundColor: "transparent",
             "& .MuiChartsAxis-line": {
-              stroke: colors.grey?.[100],
+              stroke: colors.grey?.[100], // Match the label color
             },
             "& .MuiChartsAxis-tick": {
-              stroke: colors.grey?.[100],
+              stroke: colors.grey?.[100], // Match the label color
+            },
+            "& .MuiChartsAxis-tickLabel": {
+              fill: colors.grey?.[100], // Already correct
             },
           }}
         />

@@ -7,6 +7,9 @@ import {
   PHSensorResponse,
 } from "@/data";
 
+// Configuration
+export const DEFAULT_HISTORY_DAYS = 1;
+
 // Helper function for authenticated API calls
 async function fetchWithApiKey<T>(url: string): Promise<T> {
   const apiKey = process.env.NEXT_PUBLIC_GROWPIHUB_API_KEY;
@@ -43,7 +46,7 @@ export async function fetchWaterTemperature(
 }
 
 export async function fetchWaterTemperatureHistory(
-  days: number = 30
+  days: number = DEFAULT_HISTORY_DAYS
 ): Promise<DS18B20Response[] | undefined> {
   try {
     const url = `${process.env.NEXT_PUBLIC_GROWPIHUB_API_BASE_URL}/DS18B20/days/${days}`;
@@ -67,7 +70,7 @@ export async function fetchLightDetected(
 }
 
 export async function fetchLightHistory(
-  days: number = 30
+  days: number = DEFAULT_HISTORY_DAYS
 ): Promise<LM393Response[] | undefined> {
   try {
     const url = `${process.env.NEXT_PUBLIC_GROWPIHUB_API_BASE_URL}/LM393/days/${days}`;
@@ -91,7 +94,7 @@ export async function fetchTemperatureHumidity(
 }
 
 export async function fetchTemperatureHumidityHistory(
-  days: number = 30
+  days: number = DEFAULT_HISTORY_DAYS
 ): Promise<AM2301Response[] | undefined> {
   try {
     const url = `${process.env.NEXT_PUBLIC_GROWPIHUB_API_BASE_URL}/AM2301/days/${days}`;
@@ -115,7 +118,7 @@ export async function fetchCO2(
 }
 
 export async function fetchCO2History(
-  days: number = 30
+  days: number = DEFAULT_HISTORY_DAYS
 ): Promise<CO2SensorResponse[] | undefined> {
   try {
     const url = `${process.env.NEXT_PUBLIC_GROWPIHUB_API_BASE_URL}/CO2Sensor/days/${days}`;
@@ -139,7 +142,7 @@ export async function fetchPH(
 }
 
 export async function fetchPHHistory(
-  days: number = 30
+  days: number = DEFAULT_HISTORY_DAYS
 ): Promise<PHSensorResponse[] | undefined> {
   try {
     const url = `${process.env.NEXT_PUBLIC_GROWPIHUB_API_BASE_URL}/PHSensor/days/${days}`;
@@ -164,7 +167,7 @@ export async function fetchEC(
 }
 
 export async function fetchECHistory(
-  days: number = 30
+  days: number = DEFAULT_HISTORY_DAYS
 ): Promise<ECSensorResponse[] | undefined> {
   try {
     const url = `${process.env.NEXT_PUBLIC_GROWPIHUB_API_BASE_URL}/ECSensor/days/${days}`;
