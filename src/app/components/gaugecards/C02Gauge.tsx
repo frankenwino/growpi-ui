@@ -17,9 +17,6 @@ export default function CO2Gauge({
     return "#f44336";
   };
 
-  // const apiUrl = process.env.GROWPIHUB_API_BASE_URL;
-  // console.log(apiUrl);
-
   return (
     <GaugeCard
       label={label}

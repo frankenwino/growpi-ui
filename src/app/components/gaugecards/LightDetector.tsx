@@ -7,14 +7,6 @@ export default function LightDetector({
 }: {
   lightDetected: boolean;
 }) {
-  // const apiUrl = process.env.GROWPIHUB_API_BASE_URL;
-  // const latest = `${apiUrl}/LM393/latest`;
-
-  // fetch(latest)
-  //   .then((response) => response.json())
-  //   .then((data) => console.log(data))
-  //   .catch((error) => console.error("Error:", error));
-
   return (
     <Chip
       label={lightDetected ? "Light DETECTED" : "Light NOT DETECTED"}

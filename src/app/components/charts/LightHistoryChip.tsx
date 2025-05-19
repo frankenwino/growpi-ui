@@ -40,7 +40,6 @@ export default function LightHistory() {
   if (loading) return <div>Loading light sensor history...</div>;
   if (error) return <div>Error: {error}</div>;
 
-  // Determine the date range if readings exist
   let startDate: string | null = null;
   let endDate: string | null = null;
   if (readings && readings.length > 0) {
