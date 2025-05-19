@@ -95,7 +95,7 @@ export default function Dashboard() {
             xs: "1fr", // 1 column on mobile
             sm: "repeat(2, 1fr)", // 2 columns on tablet
             md: "repeat(3, 1fr)", // 3 columns on desktop
-            lg: "repeat(4, 1fr)", // 4 columns on large screens
+            lg: "repeat(3, 1fr)", // 4 columns on large screens
           },
           gap: 3,
           width: "100%",

@@ -2,7 +2,7 @@
 
 import { ColorModeContext, useMode } from "@/theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import Sidebar from "../global/SidebarFancy";
+import Sidebar from "../global/Sidebar";
 import Topbar from "../global/Topbar";
 
 export default function ThemeWrapper({

@@ -165,6 +165,7 @@ export const themeSettings = (mode: PaletteMode) => {
             },
             background: {
               default: colors.primary?.[500] ?? "#141b2d",
+              paper: colors.primary?.[500] ?? "#141b2d",
             },
           }
         : {
@@ -182,6 +183,7 @@ export const themeSettings = (mode: PaletteMode) => {
             },
             background: {
               default: "#fcfcfc",
+              paper: "#f5f5f5", // Changed from "#fcfcfc" to a slightly darker shade
             },
           }),
     },
