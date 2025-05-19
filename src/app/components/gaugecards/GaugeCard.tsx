@@ -1,4 +1,5 @@
-import { Box, Typography } from "@mui/material";
+import { tokens } from "@/theme";
+import { Box, Typography, useTheme } from "@mui/material";
 import { Gauge } from "@mui/x-charts/Gauge";
 
 interface GaugeCardProps {
@@ -18,6 +19,8 @@ export default function GaugeCard({
   unit = "",
   getColor,
 }: GaugeCardProps) {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const safeValue = typeof value === "number" ? value : 0;
   const clamped = Math.max(min, Math.min(safeValue, max));
   const normalizedValue = ((clamped - min) / (max - min)) * 100;
@@ -25,7 +28,11 @@ export default function GaugeCard({
 
   return (
     <Box textAlign="center">
-      <Typography variant="subtitle1" gutterBottom>
+      <Typography
+        variant="subtitle1"
+        gutterBottom
+        sx={{ color: colors.grey?.[100] }}
+      >
         {label}
       </Typography>
       <Box position="relative" display="inline-flex">
@@ -53,7 +60,7 @@ export default function GaugeCard({
           left="50%"
           sx={{ transform: "translate(-50%, -50%)" }}
         >
-          <Typography variant="h6">
+          <Typography variant="h6" sx={{ color: colors.grey?.[100] }}>
             {value !== undefined ? `${value.toFixed(1)}${unit}` : "--"}
           </Typography>
         </Box>

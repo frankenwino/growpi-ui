@@ -1,4 +1,4 @@
-:root {
+/* :root {
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -39,4 +39,40 @@ a {
   html {
     color-scheme: dark;
   }
+} */
+
+html,
+body,
+#root,
+.app,
+.content {
+  height: 100%;
+  width: 100%;
+}
+
+.app {
+  display: flex;
+  position: relative;
+  /* flex-direction: column;
+  justify-content: center;
+  align-items: center; */
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #e0e0e0e0;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  /* border-radius: 10px; */
+}
+
+/* Handle on hover */
+::webkit-scrollbar-thumb:hover {
+  background: #555;
 }

@@ -2,10 +2,15 @@
 
 import { fetchWaterTemperatureHistory } from "@/app/services/api";
 import { DS18B20Response } from "@/data";
+import { tokens } from "@/theme";
+import { useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import SensorHistoryChart from "./SensorHistoryChart";
 
 export default function WaterTemperatureHistoryChart() {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   const [readings, setReadings] = useState<DS18B20Response[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -38,7 +43,7 @@ export default function WaterTemperatureHistoryChart() {
       readings={readings}
       valueKey="temperature"
       unit="°C"
-      color="#00ACC1"
+      color={colors.blueAccent?.[400] ?? "#00ACC1"} // Fallback to default color if undefined
       yAxisMin={5}
       yAxisMax={35}
     />

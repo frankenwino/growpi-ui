@@ -2,10 +2,15 @@
 
 import { fetchECHistory } from "@/app/services/api";
 import { ECSensorResponse } from "@/data";
+import { tokens } from "@/theme";
+import { useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import SensorHistoryChart from "./SensorHistoryChart";
 
 export default function ECHistoryChart() {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   const [readings, setReadings] = useState<ECSensorResponse[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -38,7 +43,7 @@ export default function ECHistoryChart() {
       readings={readings}
       valueKey="mScm"
       unit="mS/cm"
-      color="#00ACC1"
+      color={colors.blueAccent?.[500] ?? "#00ACC1"} // Fallback to default color if undefined
       yAxisMin={0}
       yAxisMax={5}
     />
