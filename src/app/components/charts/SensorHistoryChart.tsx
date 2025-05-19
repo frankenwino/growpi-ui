@@ -1,4 +1,5 @@
-import { Box, Typography } from "@mui/material";
+import { tokens } from "@/theme";
+import { Box, Typography, useTheme } from "@mui/material";
 import { LineChart } from "@mui/x-charts";
 
 interface SensorReading {
@@ -25,6 +26,8 @@ export default function SensorHistoryChart<T extends SensorReading>({
   yAxisMin,
   yAxisMax,
 }: SensorHistoryChartProps<T>) {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const chartData = readings.map((reading) => ({
     timestamp: new Date(reading.reading_timestamp_utc).getTime(),
     value: reading[valueKey],
@@ -32,7 +35,7 @@ export default function SensorHistoryChart<T extends SensorReading>({
 
   return (
     <Box sx={{ padding: 3 }}>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" gutterBottom sx={{ color: colors.grey?.[100] }}>
         {title}
       </Typography>
 
@@ -43,6 +46,9 @@ export default function SensorHistoryChart<T extends SensorReading>({
               data: chartData.map((d) => d.timestamp),
               scaleType: "time",
               valueFormatter: (value) => new Date(value).toLocaleString(),
+              tickLabelStyle: {
+                fill: colors.grey?.[100],
+              },
             },
           ]}
           yAxis={[
@@ -50,6 +56,12 @@ export default function SensorHistoryChart<T extends SensorReading>({
               label: `${title} (${unit})`,
               min: yAxisMin,
               max: yAxisMax,
+              tickLabelStyle: {
+                fill: colors.grey?.[100],
+              },
+              labelStyle: {
+                fill: colors.grey?.[100],
+              },
             },
           ]}
           series={[
@@ -67,6 +79,15 @@ export default function SensorHistoryChart<T extends SensorReading>({
             },
           ]}
           height={300}
+          sx={{
+            backgroundColor: "transparent",
+            "& .MuiChartsAxis-line": {
+              stroke: colors.grey?.[100],
+            },
+            "& .MuiChartsAxis-tick": {
+              stroke: colors.grey?.[100],
+            },
+          }}
         />
       </Box>
     </Box>
